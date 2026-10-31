@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Databases and backups
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+backups/
+*.bak
+
+# Logs
+*.log
+logs/
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Tests and coverage
+.pytest_cache/
+.coverage
+htmlcov/

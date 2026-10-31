@@ -1,0 +1,25 @@
+Скубі • Кеш — локальная проверка v1.1.11 RC (исправленная рабочая копия)
+
+Состав и контрольные суммы:
+- bot.py v1.1.11 RC — исправлена обработка результата claim_auto_task(); SHA256: cc03ed361f68fa14bc337eac6c43127b92ad1de9ae6a03d83a30b69ca90973db
+- config.py — без изменений; SHA256: 177fd014d01c89dbe6d1c136c8169387ef03b00a83e7e35bc8b04553de542858
+- database.py v1.1.10 STABLE — без изменений; SHA256: 050af3f0af5e5b75d39cba433b67825daf34a066e183ec94709d3f9fe4129a8b
+- test_bot_v111.py — добавлены TB-13a/TB-13b на повторное/успешное начисление; всего 33 тестовых метода; SHA256: 5b49555735cdef750b8d5cf0466dd3f6bd767e7c536c57b46df84267a45ba98a
+- requirements.txt — python-telegram-bot==21.1.1 и python-dotenv>=1.0,<2
+
+Исправление:
+- database.claim_auto_task() возвращает (bool, status).
+- Ранее bot.py проверял весь кортеж как bool: даже (False, 'already_done') является truthy.
+- Теперь bot.py распаковывает claimed/status и отдельно обрабатывает успех, повторную заявку и отказ.
+- database.py не изменялся.
+
+Проверки:
+- py_compile для bot.py, config.py, database.py, test_bot_v111.py: PASS.
+- Изолированный DB smoke: PASS — создание чистой schema v5, audit_integrity, регистрация/реферал, ledger, заказ, отказ при недостатке баланса, авто-задание, защита от повторного начисления, повторный audit_integrity.
+- Полный unittest test_bot_v111: BLOCKED — в среде отсутствует python-telegram-bot; попытка pip install не получила пакет из доступного индекса. 33 тестовых метода НЕ объявляются пройденными.
+
+Ограничения:
+- Это исправленная RC-копия, не STABLE/релиз.
+- Реальные Telegram API/права бота/подписки/уведомления в Telegram не проверялись.
+- Файлы production DB не открывались и не изменялись.
+- В архив не включён .env и токен.
